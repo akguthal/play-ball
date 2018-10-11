@@ -1,6 +1,38 @@
-<audio id="player" controls="" preload="none"><source src="http://us4.internet-radio.com:8266/stream?type=http&nocache=18" type="audio/mpeg"></audio>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
 
-<script>
-  var audioPlayer = document.getElementById("player");
-  audioPlayer.play();
-</script>
+  <body>
+    <!-- <audio id="player" controls="" preload="none"><source src="http://us4.internet-radio.com:8266/stream?type=http&nocache=18" type="audio/mpeg"></audio> -->
+    <audio id="player" controls="false" preload="none"><source src="http://wmuc.umd.edu:8000/sports-high" type="audio/mpeg"></audio>
+    <button id = "playButton" style="font-size:24px" onClick = "playAudio()"><i id = "buttonIcon" class="fa fa-play"></i></button>
+
+
+    <script>
+
+      function playAudio(){
+        var audioPlayer = document.getElementById("player");
+        var buttonIcon = document.getElementById("buttonIcon");
+        if (!audioPlayer.paused){
+          audioPlayer.pause();
+          buttonIcon.classList.remove('fa-pause');
+          buttonIcon.classList.add('fa-play');
+        }
+        else{
+          audioPlayer.play();
+          buttonIcon.classList.remove('fa-play');
+          buttonIcon.classList.add('fa-pause');
+        }
+      }
+
+    </script>
+
+    <style>
+      audio{
+        display: none;
+      }
+    </style>
+  </body>
+</html>
