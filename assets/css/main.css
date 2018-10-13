@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,400italic,600");
-@import url("font-awesome.min.css");
 
 @font-face {
 	font-family: 'PlayBallFont';
@@ -14,6 +13,10 @@
 
 audio{
 	display: none;
+}
+
+#nextShow{
+	color: #FF4545;
 }
 
 html, body, div, span, applet, object,
@@ -552,7 +555,7 @@ input, select, textarea {
 	.button {
 		position: relative;
 		display: inline-block;
-		background: #df7366;
+		background: #D10000;
 		color: #fff;
 		text-align: center;
 		border-radius: 0.5em;
@@ -574,7 +577,7 @@ input, select, textarea {
 		button:hover,
 		.button:hover {
 			color: #fff;
-			background: #ef8376;
+			background: #FF4545;
 		}
 
 		input[type="button"].alt,
@@ -611,7 +614,6 @@ input, select, textarea {
 
 		.icon:before {
 			display: inline-block;
-			font-family: FontAwesome;
 			font-size: 1.25em;
 			text-decoration: none;
 			font-style: normal;
@@ -689,8 +691,7 @@ input, select, textarea {
 		}
 
 			#header header > p {
-				font-size: 1.25em;
-				margin: 0;
+				font-size: 2em;
 			}
 
 		#header h1 {
@@ -1136,6 +1137,11 @@ input, select, textarea {
 
 		/* Basic */
 
+			#header header > p {
+				font-size: 1.5em;
+				margin: 0;
+			}
+
 			body, input, textarea, select {
 				font-size: 12pt;
 				line-height: 1.5em;
@@ -1183,6 +1189,11 @@ input, select, textarea {
 
 		/* Basic */
 
+			#header header > p {
+				font-size: 1.5em;
+				margin: 0;
+			}
+
 			body, input, textarea, select {
 				font-size: 13pt;
 				line-height: 1.65em;
@@ -1225,6 +1236,11 @@ input, select, textarea {
 	@media screen and (max-width: 736px) {
 
 		/* Basic */
+
+			#header header > p {
+				font-size: 1.5em;
+				margin: 0;
+			}
 
 			#logo{
 				font-size: 50pt;
@@ -1384,7 +1400,6 @@ input, select, textarea {
 				}
 
 					#navButton .toggle:before {
-						font-family: FontAwesome;
 						text-decoration: none;
 						font-style: normal;
 						font-weight: normal;
