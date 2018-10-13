@@ -1238,8 +1238,8 @@ input, select, textarea {
 		/* Basic */
 
 			#header header > p {
-				font-size: 1.5em;
-				margin: 0;
+				font-size: 1.3em;
+				margin-bottom: 1em;
 			}
 
 			#logo{
@@ -1547,10 +1547,6 @@ input, select, textarea {
 					padding-top: 1.5em;
 					padding-left: 1em;
 					padding-right: 1em;
-				}
-
-				#header header > p {
-					font-size: 1em;
 				}
 
 				#header h1 {
