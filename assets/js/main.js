@@ -47,12 +47,12 @@ function playAudio(){
 		var today = moment();
 		var todayDayVal = today.isoWeekday();
 
-		var nextTuesday = moment().day(2).hours(19).minutes(0).seconds(0);
-		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(0).seconds(0);
+		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(0).seconds(0); //8PM on this Tuesday
+		var nextTuesday = nextTuesdayEndShow.clone().hours(19);
 		if (todayDayVal >= 2){
 			if (todayDayVal > 2 || (todayDayVal == 2 && (today - nextTuesdayEndShow) > 0)){
-				nextTuesday = moment().day(9).hours(19).minutes(0).seconds(0);
-				nextTuesdayEndShow = moment().day(9).hours(20).minutes(0).seconds(0);
+				nextTuesdayEndShow = moment().day(9).hours(20).minutes(0).seconds(0); //If after the show, go forward a week
+				nextTuesday = nextTuesdayEndShow.clone().hours(19);
 			}
 			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){
 				document.getElementById("nextShow").innerHTML = "We're Live!";
