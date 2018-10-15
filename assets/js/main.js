@@ -45,10 +45,22 @@ function playAudio(){
 
   function getNextShow(){
 		var today = moment();
-		var nextTuesday = moment().day(2+7).hours(19).minutes(0).seconds(0);
-		var nextTuesdayEndShow = moment().day(2+7).hours(20).minutes(0).seconds(0);
-		var seconds = Math.ceil((nextTuesday - today)/1000);
+		var todayDayVal = today.isoWeekday();
 
+		var nextTuesday = moment().day(2).hours(19).minutes(0).seconds(0);
+		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(0).seconds(0);
+		if (todayDayVal >= 2){
+			if (todayDayVal > 2 || (todayDayVal == 2 && (today - nextTuesdayEndShow) > 0)){
+				nextTuesday = moment().day(9).hours(19).minutes(0).seconds(0);
+				nextTuesdayEndShow = moment().day(9).hours(20).minutes(0).seconds(0);
+			}
+			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){
+				document.getElementById("nextShow").innerHTML = "We're Live!";
+				return;
+			}
+		}
+
+		var seconds = Math.ceil((nextTuesday - today)/1000);
 		var days = Math.floor(seconds/(24 * 3600));
 		seconds -= days*(24*3600);
 		var hours = Math.floor(seconds / 3600);
@@ -81,10 +93,6 @@ function playAudio(){
 		
 
 		document.getElementById("nextShow").innerHTML = timeString;
-
-		if (Math.ceil((nextTuesdayEndShow - today)/1000) <= 3600){
-			document.getElementById("nextShow").innerHTML = "We're Live!";
-		}
 	}
 	
 	window.setInterval(getNextShow, 1000);
