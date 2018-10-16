@@ -48,13 +48,13 @@ function playAudio(){
 		var todayDayVal = today.isoWeekday();
 
 		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(0).seconds(0); //8PM on this Tuesday
-		var nextTuesday = nextTuesdayEndShow.clone().hours(19);
+		var nextTuesday = nextTuesdayEndShow.clone().hours(19); //Start of the show, set time to 7PM
 		if (todayDayVal >= 2){
 			if (todayDayVal > 2 || (todayDayVal == 2 && (today - nextTuesdayEndShow) > 0)){
 				nextTuesdayEndShow = moment().day(9).hours(20).minutes(0).seconds(0); //If after the show, go forward a week
 				nextTuesday = nextTuesdayEndShow.clone().hours(19);
 			}
-			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){
+			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){ //Show is going on right now
 				document.getElementById("nextShow").innerHTML = "We're Live!";
 				return;
 			}
@@ -66,7 +66,6 @@ function playAudio(){
 		var hours = Math.floor(seconds / 3600);
 		seconds -= hours * 3600;
 		var minutes = Math.ceil(seconds / 60);	
-
 
 		dayString = days+" days, ";
 		if (days == 0){
