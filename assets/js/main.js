@@ -41,21 +41,24 @@ function playAudio(){
 	  buttonIcon.classList.add('fa-pause');
 	}
 	}
-	
+
 
   function getNextShow(){
 		var today = moment();
 		var todayDayVal = today.isoWeekday();
 
-		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(0).seconds(0); //8PM on this Tuesday
+		document.getElementById("audioLink").src = "http://us4.internet-radio.com:8266/stream?type=http&nocache=18";
+
+		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(5).seconds(0); //8PM on this Tuesday
 		var nextTuesday = nextTuesdayEndShow.clone().hours(19); //Start of the show, set time to 7PM
 		if (todayDayVal >= 2){
 			if (todayDayVal > 2 || (todayDayVal == 2 && (today - nextTuesdayEndShow) > 0)){
-				nextTuesdayEndShow = moment().day(9).hours(20).minutes(0).seconds(0); //If after the show, go forward a week
+				nextTuesdayEndShow = moment().day(9).hours(20).minutes(5).seconds(0); //If after the show, go forward a week
 				nextTuesday = nextTuesdayEndShow.clone().hours(19);
 			}
 			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){ //Show is going on right now
 				document.getElementById("nextShow").innerHTML = "We're Live!";
+				document.getElementById("audioLink").src = "http://wmuc.umd.edu:8000/sports-high";
 				return;
 			}
 		}
@@ -65,7 +68,7 @@ function playAudio(){
 		seconds -= days*(24*3600);
 		var hours = Math.floor(seconds / 3600);
 		seconds -= hours * 3600;
-		var minutes = Math.ceil(seconds / 60);	
+		var minutes = Math.ceil(seconds / 60);
 
 		dayString = days+" days, ";
 		if (days == 0){
@@ -87,14 +90,11 @@ function playAudio(){
 		if (minutes == 1){
 			minuteString = minutes+" minute";
 		}
-		
+
 		var timeString = dayString+hourString+minuteString;
-		
+
 
 		document.getElementById("nextShow").innerHTML = timeString;
 	}
-	
+
 	window.setInterval(getNextShow, 1000);
-
-
-
