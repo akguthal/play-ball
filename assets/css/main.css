@@ -2,7 +2,7 @@
 
 @font-face {
 	font-family: 'PlayBallFont';
-	src: url('../fonts/playball.ttf'); 
+	src: url('../fonts/playball.ttf');
   }
 
 /*
@@ -664,7 +664,7 @@ input, select, textarea {
 		text-align: center;
 		padding: 7.5em 0 2em 0;
 		cursor: default;
-		background: url("../../images/header.jpg") no-repeat center center fixed; 
+		background: url("../../images/header.jpg") no-repeat center center fixed;
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
 		-o-background-size: cover;
@@ -1624,4 +1624,3 @@ input, select, textarea {
 					}
 
 	}
-

@@ -6,10 +6,15 @@
 
 var showOn = false;
 
-var jazzLink = "http://us4.internet-radio.com:8266/stream?type=http&nocache=18";
-var wmucLink = "http://wmuc.umd.edu:8000/sports-high";
+function getJazzLink(){
+	return "http://us4.internet-radio.com:8266/stream?type=http&nocache=18&cb=" + new Date().getTime();
+}
 
-var audioLink = jazzLink;
+function getWMUCLink(){
+	return "http://wmuc.umd.edu:8000/sports-high?cb=" + new Date().getTime();
+}
+
+var audioLink = getJazzLink();
 
 (function($) {
 
@@ -42,19 +47,15 @@ function playAudio(){
 		setTimeout(function () {
 			audioPlayer.load();
 		});
-	  buttonIcon.classList.remove('fa-pause');
+	  buttonIcon.classList.remove('fa-stop');
 	  buttonIcon.classList.add('fa-play');
 	}
 	else{
 		audioPlayer.setAttribute("src", audioLink);
 		audioPlayer.load();
-		setTimeout(
-	    function(){
-	       audioPlayer.play();
-	    }
-			, 3000);
+		audioPlayer.play();
 	  buttonIcon.classList.remove('fa-play');
-	  buttonIcon.classList.add('fa-pause');
+	  buttonIcon.classList.add('fa-stop');
 	}
 }
 
@@ -74,7 +75,7 @@ function playAudio(){
 				document.getElementById("nextShow").innerHTML = "We're Live!";
 				if (!showOn){
 					showOn = true;
-					audioLink = wmucLink;
+					audioLink = getWMUCLink();
 				}
 				return;
 			}
@@ -82,7 +83,7 @@ function playAudio(){
 
 		if (showOn){
 			showOn = false;
-			audioLink = jazzLink;
+			audioLink = getJazzLink();
 		}
 
 		var seconds = Math.ceil((nextTuesday - today)/1000);
