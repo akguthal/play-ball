@@ -4,6 +4,12 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+var showOn = false;
+
+var jazzLink = "http://us4.internet-radio.com:8266/stream?type=http&nocache=18";
+var wmucLink = "http://wmuc.umd.edu:8000/sports-high";
+
+var audioLink = jazzLink;
 
 (function($) {
 
@@ -32,25 +38,33 @@ function playAudio(){
 	var buttonIcon = document.getElementById("buttonIcon");
 	if (!audioPlayer.paused){
 	  audioPlayer.pause();
+		audioPlayer.setAttribute("src", "");
+		setTimeout(function () {
+			audioPlayer.load();
+		});
 	  buttonIcon.classList.remove('fa-pause');
 	  buttonIcon.classList.add('fa-play');
 	}
 	else{
-	  audioPlayer.play();
+		audioPlayer.setAttribute("src", audioLink);
+		audioPlayer.load();
+		setTimeout(
+	    function(){
+	       audioPlayer.play();
+	    }
+			, 3000);
 	  buttonIcon.classList.remove('fa-play');
 	  buttonIcon.classList.add('fa-pause');
 	}
-	}
+}
 
 
-  function getNextShow(){
+	function getNextShow(){
 		var today = moment();
 		var todayDayVal = today.isoWeekday();
 
-		document.getElementById("audioLink").src = "http://us4.internet-radio.com:8266/stream?type=http&nocache=18";
-
-		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(5).seconds(0); //8PM on this Tuesday
-		var nextTuesday = nextTuesdayEndShow.clone().hours(19); //Start of the show, set time to 7PM
+		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(5).seconds(0); //8:05PM on this Tuesday
+		var nextTuesday = nextTuesdayEndShow.clone().hours(19).minutes(0); //Start of the show, set time to 7PM
 		if (todayDayVal >= 2){
 			if (todayDayVal > 2 || (todayDayVal == 2 && (today - nextTuesdayEndShow) > 0)){
 				nextTuesdayEndShow = moment().day(9).hours(20).minutes(5).seconds(0); //If after the show, go forward a week
@@ -58,9 +72,17 @@ function playAudio(){
 			}
 			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){ //Show is going on right now
 				document.getElementById("nextShow").innerHTML = "We're Live!";
-				document.getElementById("audioLink").src = "http://wmuc.umd.edu:8000/sports-high";
+				if (!showOn){
+					showOn = true;
+					audioLink = wmucLink;
+				}
 				return;
 			}
+		}
+
+		if (showOn){
+			showOn = false;
+			audioLink = jazzLink;
 		}
 
 		var seconds = Math.ceil((nextTuesday - today)/1000);
