@@ -47,7 +47,7 @@ function playAudio(){
 		setTimeout(function () {
 			audioPlayer.load();
 		});
-	  buttonIcon.classList.remove('fa-stop');
+	  buttonIcon.classList.remove('fa-pause');
 	  buttonIcon.classList.add('fa-play');
 	}
 	else{
@@ -55,7 +55,7 @@ function playAudio(){
 		audioPlayer.load();
 		audioPlayer.play();
 	  buttonIcon.classList.remove('fa-play');
-	  buttonIcon.classList.add('fa-stop');
+	  buttonIcon.classList.add('fa-pause');
 	}
 }
 
