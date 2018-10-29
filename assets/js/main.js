@@ -66,7 +66,7 @@ function playAudio(){
 
 		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(5).seconds(0); //8:05PM on this Tuesday
 		var nextTuesday = nextTuesdayEndShow.clone().hours(19).minutes(0); //Start of the show, set time to 7PM
-		if (todayDayVal >= 2){
+		if (todayDayVal >= 2 && todayDayVal != 7){
 			if (todayDayVal > 2 || (todayDayVal == 2 && (today - nextTuesdayEndShow) > 0)){
 				nextTuesdayEndShow = moment().day(9).hours(20).minutes(5).seconds(0); //If after the show, go forward a week
 				nextTuesday = nextTuesdayEndShow.clone().hours(19);
