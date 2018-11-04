@@ -72,7 +72,7 @@ function playAudio(){
 				nextTuesday = nextTuesdayEndShow.clone().hours(19);
 			}
 			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){ //Show is going on right now
-				document.getElementById("nextShow").innerHTML = "We're Live!";
+				document.getElementById("nextShow").innerHTML = "We're Live! Call in your questions to 301-580-0012, or tweet @PlayBallWMUC.";
 				if (!showOn){
 					showOn = true;
 					audioLink = getWMUCLink();
