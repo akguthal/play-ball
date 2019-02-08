@@ -6,118 +6,127 @@
 
 var showOn = false;
 
-function getJazzLink(){
+function getJazzLink() {
 	return "http://us4.internet-radio.com:8266/stream?type=http&nocache=18&cb=" + new Date().getTime();
 }
 
-function getWMUCLink(){
+function getWMUCLink() {
 	return "http://wmuc.umd.edu:8000/sports-high?cb=" + new Date().getTime();
 }
 
 var audioLink = getJazzLink();
 
-(function($) {
+(function ($) {
 
-	var	$window = $(window),
+	var $window = $(window),
 		$body = $('body');
 
 	// Breakpoints.
-		breakpoints({
-			wide:      [ '1281px',  '1680px' ],
-			normal:    [ '961px',   '1280px' ],
-			narrow:    [ '841px',   '960px'  ],
-			narrower:  [ '737px',   '840px'  ],
-			mobile:    [ null,      '736px'  ]
-		});
+	breakpoints({
+		wide: ['1281px', '1680px'],
+		normal: ['961px', '1280px'],
+		narrow: ['841px', '960px'],
+		narrower: ['737px', '840px'],
+		mobile: [null, '736px']
+	});
 
 	// Play initial animations on page load.
-		$window.on('load', function() {
-			window.setTimeout(function() {
-				$body.removeClass('is-preload');
-			}, 100);
-		});
+	$window.on('load', function () {
+		window.setTimeout(function () {
+			$body.removeClass('is-preload');
+		}, 100);
+	});
 })(jQuery);
 
-function playAudio(){
+function playAudio() {
 	var audioPlayer = document.getElementById("player");
 	var buttonIcon = document.getElementById("buttonIcon");
-	if (!audioPlayer.paused){
-	  audioPlayer.pause();
+	if (!audioPlayer.paused) {
+		audioPlayer.pause();
 		audioPlayer.setAttribute("src", "");
 		setTimeout(function () {
 			audioPlayer.load();
 		});
-	  buttonIcon.classList.remove('fa-pause');
-	  buttonIcon.classList.add('fa-play');
+		buttonIcon.classList.remove('fa-pause');
+		buttonIcon.classList.add('fa-play');
 	}
-	else{
+	else {
 		audioPlayer.setAttribute("src", audioLink);
 		audioPlayer.load();
 		audioPlayer.play();
-	  buttonIcon.classList.remove('fa-play');
-	  buttonIcon.classList.add('fa-pause');
+		buttonIcon.classList.remove('fa-play');
+		buttonIcon.classList.add('fa-pause');
 	}
 }
 
 
-	function getNextShow(){
-		var today = moment();
-		var todayDayVal = today.isoWeekday();
+function getNextShow() {
+	var today = moment();
+	var todayDayVal = today.isoWeekday();
 
-		var nextTuesdayEndShow = moment().day(2).hours(20).minutes(5).seconds(0); //8:05PM on this Tuesday
-		var nextTuesday = nextTuesdayEndShow.clone().hours(19).minutes(0); //Start of the show, set time to 7PM
-		if (todayDayVal >= 2 && todayDayVal != 7){
-			if (todayDayVal > 2 || (todayDayVal == 2 && (today - nextTuesdayEndShow) > 0)){
-				nextTuesdayEndShow = moment().day(9).hours(20).minutes(5).seconds(0); //If after the show, go forward a week
-				nextTuesday = nextTuesdayEndShow.clone().hours(19);
+	var showDay = 5;
+	var showHour = 12;
+	var showMinute = 0;
+
+	var endShow = moment().isoWeekday(showDay).hours(showHour + 1).minutes(showMinute + 5).seconds(0);
+	var nextShow = moment().isoWeekday(showDay).hours(showHour).minutes(showMinute);
+
+	if (todayDayVal >= showDay && todayDayVal != 7) {
+		if (todayDayVal > showDay || (todayDayVal == showDay && (today - endShow) > 0)) { //Show already done for this week
+			endShow = endShow.add(1, 'weeks');
+			nextShow = nextShow.add(1, 'weeks');
+		}
+		else if ((today - nextShow) >= 0 && (today - endShow <= 0)) { //Show is going on right now
+			document.getElementById("liveMessage").style.display = 'block';
+			document.getElementById("nextShowMessage").style.display = 'none';
+			if (!showOn) {
+				showOn = true;
+				audioLink = getWMUCLink();
 			}
-			else if ((today - nextTuesday) >= 0 && (today - nextTuesdayEndShow <= 0)){ //Show is going on right now
-				document.getElementById("nextShow").innerHTML = "We're Live! Call in your questions to 301-580-0012, or tweet @PlayBallWMUC.";
-				if (!showOn){
-					showOn = true;
-					audioLink = getWMUCLink();
-				}
-				return;
-			}
+			return;
 		}
-
-		if (showOn){
-			showOn = false;
-			audioLink = getJazzLink();
-		}
-
-		var seconds = Math.ceil((nextTuesday - today)/1000);
-		var days = Math.floor(seconds/(24 * 3600));
-		seconds -= days*(24*3600);
-		var hours = Math.floor(seconds / 3600);
-		seconds -= hours * 3600;
-		var minutes = Math.ceil(seconds / 60);
-
-		dayString = days+" days, ";
-		if (days == 0){
-			dayString = "";
-		}
-		if (days == 1){
-			dayString = days+" day, ";
-		}
-
-		hourString = hours+" hours, ";
-		if (days == 0 && hours == 0){
-			hourString = "";
-		}
-		if (hours == 1){
-			hourString = hours+" hour, ";
-		}
-
-		minuteString = minutes+" minutes";
-		if (minutes == 1){
-			minuteString = minutes+" minute";
-		}
-
-		var timeString = dayString+hourString+minuteString;
-
-
-		document.getElementById("nextShow").innerHTML = timeString;
 	}
 
-	window.setInterval(getNextShow, 1000);
+	if (showOn) {
+		showOn = false;
+		document.getElementById("liveMessage").style.display = 'none';
+		document.getElementById("nextShowMessage").style.display = 'block';
+		audioLink = getJazzLink();
+	}
+
+	var seconds = Math.ceil((nextShow - today) / 1000);
+	var days = Math.floor(seconds / (24 * 3600));
+	seconds -= days * (24 * 3600);
+	var hours = Math.floor(seconds / 3600);
+	seconds -= hours * 3600;
+	var minutes = Math.ceil(seconds / 60);
+
+	dayString = days + " days, ";
+	if (days == 0) {
+		dayString = "";
+	}
+	if (days == 1) {
+		dayString = days + " day, ";
+	}
+
+	hourString = hours + " hours, ";
+	if (days == 0 && hours == 0) {
+		hourString = "";
+	}
+	if (hours == 1) {
+		hourString = hours + " hour, ";
+	}
+
+	minuteString = minutes + " minutes";
+	if (minutes == 1) {
+		minuteString = minutes + " minute";
+	}
+
+
+	var timeString = dayString + hourString + minuteString;
+
+
+	document.getElementById("nextShow").innerHTML = timeString;
+}
+window.onload = getNextShow;
+window.setInterval(getNextShow, 20000);

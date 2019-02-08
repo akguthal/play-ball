@@ -16,7 +16,32 @@ audio{
 }
 
 #nextShow{
-	color: #FF4545;
+	color: rgba(209, 0, 0, 1);
+}
+
+#nextShowMessage{
+	display: block;
+	color: black;
+	background-color: rgba(255,255,255,0.8);
+	padding: 30px;
+	border: 5px solid rgba(209, 0, 0, 1);
+}
+
+#liveMessage{
+	display: none;
+	color: white;
+	background-color: rgba(209, 0, 0, 0.6);
+	padding: 30px;
+	border: 5px solid white;
+}
+
+#liveMessage a{
+	color: lightskyblue
+}
+
+#playButton {
+	margin-bottom: 30px;
+	border: 3px solid white;
 }
 
 html, body, div, span, applet, object,
@@ -664,7 +689,8 @@ input, select, textarea {
 		text-align: center;
 		padding: 7.5em 0 2em 0;
 		cursor: default;
-		background: url("../../images/header.jpg") no-repeat center center fixed;
+		/* background: url("../../images/header.jpg") no-repeat center center fixed; */
+		background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url("../../images/header.jpg") no-repeat center center fixed;
 		-webkit-background-size: cover;
 		-moz-background-size: cover;
 		-o-background-size: cover;
