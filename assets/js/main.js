@@ -71,7 +71,7 @@ function getNextShow() {
 	var endShow = moment().isoWeekday(showDay).hours(showHour + 1).minutes(showMinute + 5).seconds(0);
 	var nextShow = moment().isoWeekday(showDay).hours(showHour).minutes(showMinute);
 
-	if (todayDayVal >= showDay && todayDayVal != 7) {
+	if (todayDayVal >= showDay) {
 		if (todayDayVal > showDay || (todayDayVal == showDay && (today - endShow) > 0)) { //Show already done for this week
 			endShow = endShow.add(1, 'weeks');
 			nextShow = nextShow.add(1, 'weeks');
